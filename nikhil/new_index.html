@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Practice Starter (Single File)</title>
+
+    <!-- Internal CSS -->
+    <style>
+      /* 1) Basic reset and variables */
+      *,
+      *::before,
+      *::after {
+        box-sizing: border-box;
+      }
+      :root {
+        --bg: #0f172a;         /* slate-900 */
+        --panel: #111827;      /* gray-900 */
+        --text: #e5e7eb;       /* gray-200 */
+        --muted: #94a3b8;      /* slate-400 */
+        --brand: #6366f1;      /* indigo-500 */
+        --brand-600: #4f46e5;  /* indigo-600 */
+        --border: #1f2937;     /* gray-800 */
+        --radius: 12px;
+        --shadow: 0 6px 24px rgba(0, 0, 0, 0.25);
+      }
+
+      /* 2) Global styles */
+      html, body {
+        height: 100%;
+        background:
+          radial-gradient(1200px 800px at 20% 0%, #111827, #0b1022 50%, #070b1a 100%),
+          var(--bg);
+        color: var(--text);
+        font-family: system-ui, -apple-system, Segoe UI, Roboto, Inter, Arial, sans-serif;
+        line-height: 1.6;
+        margin: 0;
+      }
+      img, video, canvas, svg {
+        max-width: 100%;
+        height: auto;
+        display: block;
+      }
+      a {
+        color: var(--text);
+        text-decoration: none;
+      }
+      .container {
+        width: min(1100px, 92vw);
+        margin: 0 auto;
+        padding: 24px 0;
+      }
+
+      /* 3) Header and nav */
+      .site-header {
+        position: sticky;
+        top: 0;
+        z-index: 10;
+        background: linear-gradient(180deg, rgba(7, 11, 26, 0.8), rgba(7, 11, 26, 0.4));
+        backdrop-filter: blur(10px);
+        border-bottom: 1px solid var(--border);
+      }
+      .logo {
+        margin: 0;
+        font-size: 1.25rem;
+        letter-spacing: 0.5px;
+      }
+      .nav {
+        display: flex;
+        gap: 16px;
+        align-items: center;
+        justify-content: flex-end;
+      }
+      .site-header .container {
+        display: grid;
+        grid-template-columns: 1fr auto;
+        align-items: center;
+        gap: 16px;
+      }
+      .nav a {
+        padding: 8px 12px;
+        border-radius: 8px;
+        color: var(--muted);
+      }
+      .nav a:hover {
+        color: var(--text);
+        background: rgba(99, 102, 241, 0.08);
+      }
+
+      /* 4) Hero section */
+      .hero {
+        margin-top: 28px;
+        padding: 28px;
+        background: linear-gradient(145deg, rgba(99, 102, 241, 0.14), rgba(99, 102, 241, 0.06));
+        border: 1px solid var(--border);
+        border-radius: var(--radius);
+        box-shadow: var(--shadow);
+      }
+      .hero h2 {
+        margin: 0 0 8px;
+        font-size: clamp(1.5rem, 1rem + 2vw, 2rem);
+      }
+      .hero p {
+        color: var(--muted);
+        margin: 0 0 16px;
+      }
+
+      /* 5) Buttons */
+      .btn {
+        display: inline-block;
+        padding: 10px 16px;
+        border-radius: 10px;
+        background: var(--brand);
+        color: white;
+        border: 1px solid rgba(255,255,255,0.08);
+        box-shadow: 0 6px 20px rgba(99, 102, 241, 0.35);
+        transition: transform 0.15s ease, background 0.15s ease;
+        cursor: pointer;
+      }
+      .btn:hover {
+        background: var(--brand-600);
+        transform: translateY(-1px);
+      }
+      .btn-ghost {
+        background: transparent;
+        border: 1px solid var(--border);
+        color: var(--text);
+        box-shadow: none;
+      }
+      .btn-ghost:hover {
+        background: rgba(255,255,255,0.04);
+      }
+
+      /* 6) Grid of cards */
+      .grid {
+        margin: 28px 0;
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 18px;
+      }
+      .card {
+        background: linear-gradient(180deg, rgba(17, 24, 39, 0.95), rgba(15, 23, 42, 0.95));
+        border: 1px solid var(--border);
+        border-radius: var(--radius);
+        padding: 18px;
+        box-shadow: var(--shadow);
+      }
+      .card h3 {
+        margin: 0 0 8px;
+        font-size: 1.1rem;
+      }
+      .card p {
+        color: var(--muted);
+        margin: 0 0 12px;
+      }
+
+      /* 7) Sidebar */
+      .sidebar {
+        margin: 28px 0 8px;
+        padding: 18px;
+        border: 1px solid var(--border);
+        border-radius: var(--radius);
+        background: rgba(17, 24, 39, 0.6);
+      }
+      .sidebar h4 {
+        margin: 0 0 12px;
+      }
+      .sidebar ul {
+        list-style: none;
+        padding: 0;
+        margin: 0;
+      }
+      .sidebar li + li {
+        margin-top: 8px;
+      }
+
+      /* 8) Footer */
+      .site-footer {
+        border-top: 1px solid var(--border);
+        background: rgba(7, 11, 26, 0.6);
+      }
+      .site-footer .container {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+      }
+
+      /* 9) Responsive tweaks */
+      @media (max-width: 900px) {
+        .grid { grid-template-columns: repeat(2, 1fr); }
+        .nav { flex-wrap: wrap; }
+      }
+      @media (max-width: 640px) {
+        .grid { grid-template-columns: 1fr; }
+        .site-header .container { grid-template-columns: 1fr; }
+        .nav { justify-content: flex-start; }
+      }
+    </style>
+  </head>
+
+  <body>
+    <header class="site-header">
+      <div class="container">
+        <h1 class="logo">Practice Starter</h1>
+        <nav class="nav">
+          <a href="#">Home</a>
+          <a href="#">Articles</a>
+          <a href="#">About</a>
+          <a href="#">Contact</a>
+        </nav>
+      </div>
+    </header>
+
+    <main class="container">
+      <section class="hero">
+        <h2>Build, test, repeat</h2>
+        <p>
+          A clean semantic scaffold to practice HTML, CSS layout, and components—modify sections, add cards, and tweak styles freely.
+        </p>
+        <button class="btn">Primary action</button>
+      </section>
+
+      <section class="grid">
+        <article class="card">
+          <h3>Card title</h3>
+          <p>Short description text to practice spacing and hierarchy.</p>
+          <a class="btn btn-ghost" href="#">Learn more</a>
+        </article>
+
+        <article class="card">
+          <h3>Another card</h3>
+          <p>Experiment with colors, borders, and hover states.</p>
+          <a class="btn btn-ghost" href="#">Learn more</a>
+        </article>
+
+        <article class="card">
+          <h3>One more</h3>
+          <p>Try changing fonts and adding responsive tweaks.</p>
+          <a class="btn btn-ghost" href="#">Learn more</a>
+        </article>
+      </section>
+
+      <aside class="sidebar">
+        <h4>Sidebar</h4>
+        <ul>
+          <li><a href="#">Helpful link</a></li>
+          <li><a href="#">Documentation</a></li>
+          <li><a href="#">Components</a></li>
+        </ul>
+      </aside>
+    </main>
+
+    <footer class="site-footer">
+      <div class="container">
+        <small>© 2025 Practice Starter</small>
+      </div>
+    </footer>
+  </body>
+</html>
